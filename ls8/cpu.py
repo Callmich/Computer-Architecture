@@ -73,4 +73,12 @@ class CPU:
 
     def run(self):
         """Run the CPU."""
-        pass
+        running = True
+
+        while running:
+            hard_code = self.ram_read(self.pc)
+
+            if hard_code == LDI:
+               next_index_a = self.ram_read(self.pc + 1)
+               next_index_b = self.ram_read(self.pc + 2)
+
