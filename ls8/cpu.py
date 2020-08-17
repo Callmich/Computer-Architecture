@@ -12,6 +12,14 @@ class CPU:
         self.pc = 0
         # need to set up functionality needs
 
+    def ram_read(self, ram_address):
+        ram_value = self.ram[ram_address]
+        return ram_value
+
+    def ram_write(self, ram_value, ram_address):
+        self.ram[ram_address] = ram_value
+
+
     def load(self):
         """Load a program into memory."""
 
