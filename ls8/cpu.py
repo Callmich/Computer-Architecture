@@ -85,7 +85,16 @@ class CPU:
             next_index_a = self.ram_read(self.pc + 1)
             next_index_b = self.ram_read(self.pc + 2)
 
-            if hard_code == LDI:
-               next_index_a = self.ram_read(self.pc + 1)
-               next_index_b = self.ram_read(self.pc + 2)
+            if ir == LDI:
+                pass
+
+            elif ir == PRN:
+                pass
+
+            elif ir == HLT:
+                pass
+
+            else:
+                print('Not working')
+                running = False
 
