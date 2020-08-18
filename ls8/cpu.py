@@ -5,6 +5,11 @@ import sys
 class CPU:
     """Main CPU class."""
 
+    LDI = 0b10000010
+    PRN = 0b01000111
+    HLT = 0b00000001
+
+
     def __init__(self):
         """Construct a new CPU."""
         self.ram = [0] * 256
