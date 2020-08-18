@@ -13,7 +13,7 @@ class CPU:
     def __init__(self):
         """Construct a new CPU."""
         self.ram = [0] * 256
-        self.regulator = [0] * 8
+        self.reg = [0] * 8
         self.pc = 0
         # need to set up functionality needs
 
@@ -86,13 +86,16 @@ class CPU:
             next_index_b = self.ram_read(self.pc + 2)
 
             if ir == LDI:
-                pass
+                self.reg[next_index_a] = next_index_b
+                self.pc += 3
 
             elif ir == PRN:
-                pass
+                print_item = self.ram[self.pc + 1]
+                print(self.reg[print_item])
+                self.pc += 2
 
             elif ir == HLT:
-                pass
+                running = False
 
             else:
                 print('Not working')
