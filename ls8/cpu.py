@@ -2,12 +2,12 @@
 
 import sys
 
+LDI = 0b10000010
+PRN = 0b01000111
+HLT = 0b00000001
+
 class CPU:
     """Main CPU class."""
-
-    LDI = 0b10000010
-    PRN = 0b01000111
-    HLT = 0b00000001
 
 
     def __init__(self):
@@ -82,11 +82,12 @@ class CPU:
 
         while running:
             running = True
-            next_index_a = self.ram_read(self.pc + 1)
-            next_index_b = self.ram_read(self.pc + 2)
+            ir = self.ram_read(self.pc)
+            operand_a = self.ram_read(self.pc + 1)
+            operand_b = self.ram_read(self.pc + 2)
 
             if ir == LDI:
-                self.reg[next_index_a] = next_index_b
+                self.reg[operand_a] = operand_b
                 self.pc += 3
 
             elif ir == PRN:
