@@ -81,7 +81,9 @@ class CPU:
         running = True
 
         while running:
-            hard_code = self.ram_read(self.pc)
+            running = True
+            next_index_a = self.ram_read(self.pc + 1)
+            next_index_b = self.ram_read(self.pc + 2)
 
             if hard_code == LDI:
                next_index_a = self.ram_read(self.pc + 1)
