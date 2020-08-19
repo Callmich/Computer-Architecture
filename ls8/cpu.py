@@ -31,7 +31,16 @@ class CPU:
 
         address = 0
 
-        # For now, we've just hardcoded a program:
+        with open(sys.arg[v]) as f:
+            for line in f:
+                l_value = line.split("#")[0].strip()
+                if l_value == '':
+                    continue
+                val = int(l_value, 2)
+                self.ram[address] = val
+                address += 1
+                print(line)
+                exit(1)
 
 
         # Removing the hardcoded program
