@@ -18,6 +18,8 @@ class CPU:
         self.ram = [0] * 256
         self.reg = [0] * 8
         self.pc = 0
+        sp = 7
+        reg[sp] = 0xF4
         # need to set up functionality needs
 
     def ram_read(self, ram_address):
@@ -116,6 +118,12 @@ class CPU:
             elif ir == MUL:
                 self.alu(ir, operand_a, operand_b)
                 # self.pc += 3
+            
+            elif ir == POP:
+                pass
+
+            elif ir == PUSH:
+                pass
 
             else:
                 print('Not working')
