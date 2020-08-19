@@ -54,9 +54,9 @@ class CPU:
         #     0b00000001, # HLT
         # ]
 
-        for instruction in program:
-            self.ram[address] = instruction
-            address += 1
+        # for instruction in program:
+        #     self.ram[address] = instruction
+        #     address += 1
 
 
     def alu(self, op, reg_a, reg_b):
@@ -65,6 +65,8 @@ class CPU:
         if op == "ADD":
             self.reg[reg_a] += self.reg[reg_b]
         #elif op == "SUB": etc
+        elif op == "MUL":
+            self.reg[reg_a] *= self.reg[reg_b]
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -108,6 +110,10 @@ class CPU:
 
             elif ir == HLT:
                 running = False
+            
+            elif ir == MUL:
+                self.alu(ir, operand_a, operand_b)
+                self.pc += 3
 
             else:
                 print('Not working')
