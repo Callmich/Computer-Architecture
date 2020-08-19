@@ -39,8 +39,8 @@ class CPU:
                 val = int(l_value, 2)
                 self.ram[address] = val
                 address += 1
-                print(line)
-            exit(1)
+            #     print(line)
+            # exit(1)
 
 
         # Removing the hardcoded program
@@ -65,7 +65,7 @@ class CPU:
         if op == "ADD":
             self.reg[reg_a] += self.reg[reg_b]
         #elif op == "SUB": etc
-        elif op == "MUL":
+        elif op == MUL:
             self.reg[reg_a] *= self.reg[reg_b]
         else:
             raise Exception("Unsupported ALU operation")
