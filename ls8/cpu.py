@@ -101,21 +101,23 @@ class CPU:
 
             if ir == LDI:
                 self.reg[operand_a] = operand_b
-                self.pc += 3
+                # self.pc += 3
 
             elif ir == PRN:
                 print_item = self.ram[self.pc + 1]
                 print(self.reg[print_item])
-                self.pc += 2
+                # self.pc += 2
 
             elif ir == HLT:
                 running = False
             
             elif ir == MUL:
                 self.alu(ir, operand_a, operand_b)
-                self.pc += 3
+                # self.pc += 3
 
             else:
                 print('Not working')
                 running = False
+            
+            self.pc += (ir >> 6) + 1 
 
