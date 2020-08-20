@@ -127,10 +127,10 @@ class CPU:
 
             elif ir == PUSH:
                 self.reg[7] -= 1
-                self.ram[self.reg[7]] = self.reg[operand_a]
+                self.ram[self.reg[sp]] = self.reg[operand_a]
             
             elif ir == POP:
-                self.reg[operand_a] = self.ram[self.reg[7]]
+                self.reg[operand_a] = self.ram[self.reg[sp]]
                 self.reg[sp] += 1
             
             else:
