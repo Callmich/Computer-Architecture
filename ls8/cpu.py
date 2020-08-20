@@ -2,6 +2,7 @@
 
 import sys
 
+ADD = 0b10100000
 LDI = 0b10000010
 PRN = 0b01000111
 HLT = 0b00000001
@@ -68,7 +69,7 @@ class CPU:
     def alu(self, op, reg_a, reg_b):
         """ALU operations."""
 
-        if op == "ADD":
+        if op == ADD:
             self.reg[reg_a] += self.reg[reg_b]
         #elif op == "SUB": etc
         elif op == MUL:
@@ -111,7 +112,7 @@ class CPU:
             # print(f'sp: {self.reg[7]}')
             # print(f'data: {self.ram[self.reg[7]]}')
             # print()
-            print(ir)
+            # print(ir)
 
             if ir == LDI:
                 self.reg[operand_a] = operand_b
@@ -125,6 +126,9 @@ class CPU:
             elif ir == HLT:
                 running = False
             
+            elif ir == ADD:
+                self.alu(ir, operand_a, operand_b)
+            
             elif ir == MUL:
                 self.alu(ir, operand_a, operand_b)
                 # self.pc += 3
@@ -137,22 +141,22 @@ class CPU:
                 self.reg[operand_a] = self.ram[self.reg[sp]]
                 self.reg[sp] += 1
 
-            # elif ir == CALL:
-            #     #The address of the instruction directly after CALL is pushed onto the stack. This allows us to return to where we left off when the subroutine finishes executing.
-            #     self.reg[sp] -= 1
-            #     jump_point = self.pc + (ir >> 6) + 1
-            #     self.ram[self.reg[sp]] = jump_point
-            #     #The PC is set to the address stored in the given register. We jump to that location in RAM and execute the first instruction in the subroutine. The PC can move forward or backwards from its current location.
-            #     self.pc = self.reg[operand_a]
-            #     continue
+            elif ir == CALL:
+                #The address of the instruction directly after CALL is pushed onto the stack. This allows us to return to where we left off when the subroutine finishes executing.
+                self.reg[sp] -= 1
+                jump_point = self.pc + (ir >> 6) + 1
+                self.ram[self.reg[sp]] = jump_point
+                #The PC is set to the address stored in the given register. We jump to that location in RAM and execute the first instruction in the subroutine. The PC can move forward or backwards from its current location.
+                self.pc = self.reg[operand_a]
+                continue
                 
 
-            # elif ir == RET:
-            #     # Pop the value from the top of the stack and store it in the PC.
-            #     ret_value = self.ram[self.reg[sp]]
-            #     self.pc = ret_value
-            #     self.reg[sp] += 1
-            #     continue
+            elif ir == RET:
+                # Pop the value from the top of the stack and store it in the PC.
+                ret_value = self.ram[self.reg[sp]]
+                self.pc = ret_value
+                self.reg[sp] += 1
+                continue
             
             else:
                 print('Not working')
