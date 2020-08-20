@@ -104,13 +104,13 @@ class CPU:
             ir = self.ram_read(self.pc)
             operand_a = self.ram_read(self.pc + 1)
             operand_b = self.ram_read(self.pc + 2)
-            print()
-            print(f'Reg 0: {self.reg[0]}')
-            print(f'Reg 1: {self.reg[1]}')
-            print(f'Reg 2: {self.reg[2]}')
-            print(f'sp: {self.reg[7]}')
-            print(f'data: {self.ram[self.reg[7]]}')
-            print()
+            # print()
+            # print(f'Reg 0: {self.reg[0]}')
+            # print(f'Reg 1: {self.reg[1]}')
+            # print(f'Reg 2: {self.reg[2]}')
+            # print(f'sp: {self.reg[7]}')
+            # print(f'data: {self.ram[self.reg[7]]}')
+            # print()
 
             if ir == LDI:
                 self.reg[operand_a] = operand_b
@@ -129,7 +129,7 @@ class CPU:
                 # self.pc += 3
 
             elif ir == PUSH:
-                self.reg[7] -= 1
+                self.reg[sp] -= 1
                 self.ram[self.reg[sp]] = self.reg[operand_a]
             
             elif ir == POP:
@@ -137,10 +137,20 @@ class CPU:
                 self.reg[sp] += 1
 
             elif ir == CALL:
-                pass
+                #The address of the instruction directly after CALL is pushed onto the stack. This allows us to return to where we left off when the subroutine finishes executing.
+                self.reg[sp] -1
+                self.ram[self.reg[sp]] = (ir >> 6) + 1
+                #The PC is set to the address stored in the given register. We jump to that location in RAM and execute the first instruction in the subroutine. The PC can move forward or backwards from its current location.
+                self.pc = self.reg[operand_a]
+                continue
+                
 
             elif ir == RET:
-                pass
+                # Pop the value from the top of the stack and store it in the PC.
+                ret_value = self.ram[self.reg[sp]]
+                self.pc = ret_value
+                self.reg[sp] += 1
+                continue
             
             else:
                 print('Not working')
