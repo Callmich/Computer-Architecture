@@ -8,6 +8,7 @@ HLT = 0b00000001
 MUL = 0b10100010
 PUSH = 0b01000101
 POP = 0b01000110
+sp = 7
 
 class CPU:
     """Main CPU class."""
@@ -18,8 +19,7 @@ class CPU:
         self.ram = [0] * 256
         self.reg = [0] * 8
         self.pc = 0
-        sp = 7
-        reg[sp] = 0xF4
+        self.reg[sp] = 0xF4
         # need to set up functionality needs
 
     def ram_read(self, ram_address):
@@ -28,7 +28,6 @@ class CPU:
 
     def ram_write(self, ram_value, ram_address):
         self.ram[ram_address] = ram_value
-
 
     def load(self):
         """Load a program into memory."""
@@ -102,6 +101,13 @@ class CPU:
             ir = self.ram_read(self.pc)
             operand_a = self.ram_read(self.pc + 1)
             operand_b = self.ram_read(self.pc + 2)
+            print()
+            print(f'Reg 0: {self.reg[0]}')
+            print(f'Reg 1: {self.reg[1]}')
+            print(f'Reg 2: {self.reg[2]}')
+            print(f'sp: {self.reg[7]}')
+            print(f'data: {self.ram[self.reg[7]]}')
+            print()
 
             if ir == LDI:
                 self.reg[operand_a] = operand_b
@@ -118,13 +124,15 @@ class CPU:
             elif ir == MUL:
                 self.alu(ir, operand_a, operand_b)
                 # self.pc += 3
-            
-            elif ir == POP:
-                pass
 
             elif ir == PUSH:
-                pass
-
+                self.reg[7] -= 1
+                self.ram[self.reg[7]] = self.reg[operand_a]
+            
+            elif ir == POP:
+                self.reg[operand_a] = self.ram[self.reg[7]]
+                self.reg[sp] += 1
+            
             else:
                 print('Not working')
                 running = False
