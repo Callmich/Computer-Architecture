@@ -8,6 +8,9 @@ HLT = 0b00000001
 MUL = 0b10100010
 PUSH = 0b01000101
 POP = 0b01000110
+CALL = 0b01010000
+RET = 0b00010001
+
 sp = 7
 
 class CPU:
@@ -132,6 +135,12 @@ class CPU:
             elif ir == POP:
                 self.reg[operand_a] = self.ram[self.reg[sp]]
                 self.reg[sp] += 1
+
+            elif ir == CALL:
+                pass
+
+            elif ir == RET:
+                pass
             
             else:
                 print('Not working')
