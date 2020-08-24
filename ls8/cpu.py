@@ -112,7 +112,9 @@ class CPU:
             # print(f'sp: {self.reg[7]}')
             # print(f'data: {self.ram[self.reg[7]]}')
             # print()
+
             # print(ir)
+
 
             if ir == LDI:
                 self.reg[operand_a] = operand_b
